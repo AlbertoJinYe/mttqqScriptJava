@@ -5,14 +5,14 @@ import org.eclipse.paho.client.mqttv3.*;
 public class Publicador {
     public static void main(String[] args) {
 
-        String broker="tcp://localhost:1883";
+        String broker="tcp://test.mosquito.org:1883";
         String topic="/NTT/NTTdata/IBIOL/Spain/Madrid/AlbertoJinYe";
         String message="Mi primer mensaje MQTT --> Alberto Jin Ye";
 
         int QoS=1;
 
         try {
-            MqttClient mqttClient= new MqttClient(broker,"cliente");
+            MqttClient mqttClient= new MqttClient(broker,"Alberto");
             MqttConnectOptions mqttOptions = new MqttConnectOptions();
 
             mqttOptions.setCleanSession(true);

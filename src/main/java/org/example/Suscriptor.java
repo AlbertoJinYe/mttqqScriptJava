@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Suscriptor {
     public static void main(String[] args) {
-        String broker="tcp://localhost:1883";
+        String broker="tcp://test.mosquito.org:1883";
         String topic="/NTT/NTTdata/IBIOL/Spain/Madrid/AlbertoJinYe";
         int QoS=1;
 
@@ -51,10 +51,6 @@ public class Suscriptor {
             }
         } catch (MqttException e) {
             System.err.println("Error MQTT: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Error IO: " + e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
