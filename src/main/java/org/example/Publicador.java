@@ -31,8 +31,10 @@ public class Publicador {
 
                     mqttClient.publish(topic, mqttMsg);
                     contador++;
-                    Thread.sleep(1000); // 5 segundos
+                    Thread.sleep(1000);
                 }
+
+
                 mqttClient.disconnect();
                 mqttClient.close();
                 System.out.println("Desconectado publicador");

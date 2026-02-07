@@ -2,39 +2,39 @@ package org.example;
 
 import org.eclipse.paho.client.mqttv3.*;
 
+public class Suscriptor3 {
+    private static final String BROKER = "tcp://test.mosquitto.org:1883";
+    private static final int QOS = 1;
 
-public class Suscriptor {
+
     public static void main(String[] args) {
-        String broker="tcp://test.mosquitto.org:1883";
-        String topic="/NTT/NTTdata/IBIOL/Spain/Madrid/AlbertoJinYe";
-        int QoS=1;
+
+        String topic="/NTTdata/+/Nvision/microfactory/humedad";
 
         try {
 
-            MqttClient mqttClient= new MqttClient(broker,"cliente");
+            MqttClient mqttClient= new MqttClient(BROKER,"cliente");
             MqttConnectOptions mqttOptions = new MqttConnectOptions();
 
             mqttOptions.setCleanSession(true);
-            System.out.println("Conectando al broker soy Suscriptor: " + broker);
+            System.out.println("Conectando al broker soy Suscriptor: " + BROKER);
+            System.out.println("======================================================");
             mqttClient.connect(mqttOptions);
 
 
             if (mqttClient.isConnected()) {
-                System.out.println("Conectado soy suscriptor");
+                System.out.println("Conectado al topic: " + topic + " soy suscriptor");
+                System.out.println("======================================================");
 
                 mqttClient.setCallback(new MqttCallback() {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
 
+                        String ciudad=topic.split("/")[2];
                         String mensajeRecibido= new String(message.getPayload());
-                        System.out.println(mensajeRecibido);
+                        System.out.println("Humedad de la ciudad de "+ciudad+ ": "+mensajeRecibido);
                         System.out.println();
 
-                        if (mensajeRecibido.equals("Mi primer mensaje MQTT --> Alberto Jin Ye 4")){
-                            System.out.println("Desconectado suscriptor");
-                            mqttClient.disconnect();
-                            mqttClient.close();
-                        }
 
                     }
 
@@ -49,12 +49,11 @@ public class Suscriptor {
                     }
                 });
 
-                mqttClient.subscribe(topic, QoS);
+                mqttClient.subscribe(topic, QOS);
 
             }
         } catch (MqttException e) {
             System.err.println("Error MQTT: " + e.getMessage());
         }
     }
-
 }
